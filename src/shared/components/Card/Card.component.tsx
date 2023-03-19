@@ -1,29 +1,35 @@
 import './Card.style.css';
-import { MouseEventHandler } from 'react';
+import { Color } from '../../models/Color.model';
 
 type Props = {
-    color?: string;
-    colorStatus: boolean;
-    clickEvent: MouseEventHandler<HTMLDivElement>;
+    color: Color;
+    clickEvent: (
+        event: React.MouseEvent<HTMLDivElement>,
+        coordinate: number[]
+    ) => void;
+    coordinate: number[];
 };
 
-export function Card({ color, colorStatus, clickEvent }: Props) {
+export function Card({ color, clickEvent, coordinate }: Props) {
     return (
-        <div className="card-container" onClick={clickEvent}>
+        <div
+            className="card-container"
+            onClick={(event) => clickEvent(event, coordinate)}
+        >
             <div
                 className="card-back"
                 style={{
-                    display: colorStatus ? 'none' : '',
+                    display: color.visible ? 'none' : '',
                 }}
             ></div>
             <div
                 className="card-front"
                 style={{
-                    backgroundColor: color || 'red',
-                    display: colorStatus ? '' : 'none',
+                    backgroundColor: color.value || 'red',
+                    display: color.visible ? '' : 'none',
                 }}
             >
-                Card
+                Card, {color.displayNumber}
             </div>
         </div>
     );

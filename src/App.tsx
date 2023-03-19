@@ -3,20 +3,15 @@ import './App.css';
 import { Card } from './shared/components/Card/Card.component';
 import { ColorService } from './shared/services/ColorService';
 import { MapService } from './shared/services/MapService';
-
-type Color = {
-    used: number;
-    value: string;
-};
+import { Color } from './shared/models/Color.model';
 
 function App() {
     const colorService = ColorService.Instance;
     const mapService = MapService.Instance;
     const [rows, setRows] = useState(3);
-    const map = mapService.generateMap(rows);
-    const totalCells = rows * 3;
-    const totalColors = totalCells / 2;
 
+    const totalCells = rows * 4;
+    const totalColors = totalCells / 2;
     const colors: Color[] = [];
 
     for (let i = 0; i < totalColors; i++) {
@@ -24,22 +19,23 @@ function App() {
         colors.push({
             used: 0,
             value: currColor,
+            visible: false,
+            displayNumber: i + 1,
         });
     }
 
-    const cardClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        console.log(event);
-    };
+    const [map, setMap] = useState(mapService.generateMap(rows, colors));
 
-    const grabColor = (): string => {
-        while (true) {
-            const randIdx = Math.floor(Math.random() * colors.length);
-            const color = colors[randIdx];
-            if (color.used <= 2) {
-                color.used++;
-                return color.value;
-            }
-        }
+    const cardClick = (
+        event: React.MouseEvent<HTMLDivElement>,
+        coordinate: number[]
+    ) => {
+        const row = coordinate[0];
+        const col = coordinate[1];
+        const newMap = [...map];
+        newMap[row][col].visible = !newMap[row][col].visible;
+        setMap(newMap);
+        console.log(event);
     };
 
     return (
@@ -48,24 +44,19 @@ function App() {
                 return (
                     <>
                         {row.map((status, idx) => {
-                            const key = rowIdx + idx;
+                            const key = `${rowIdx}${idx}`;
                             return (
                                 <Card
-                                    color={grabColor()}
-                                    colorStatus={true}
+                                    color={map[rowIdx][idx]}
                                     clickEvent={cardClick}
                                     key={key}
+                                    coordinate={[rowIdx, idx]}
                                 />
                             );
                         })}
                     </>
                 );
             })}
-            <Card
-                color={colorService.generateColor()}
-                colorStatus={false}
-                clickEvent={cardClick}
-            />
         </div>
     );
 }
