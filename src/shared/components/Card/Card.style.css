@@ -1,6 +1,11 @@
 .card-container {
     width: 150px;
     height: 150px;
+    margin: 0.3rem;
+}
+
+.card-container,
+.card-container > div {
     border: 1px solid gray;
     border-radius: 0.5rem;
 }
@@ -13,6 +18,14 @@
 
 .card-back {
     background-color: gray;
+}
+
+.card-front {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: xxx-large;
 }
 
 @media (min-width: 768px) {
