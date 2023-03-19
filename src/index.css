@@ -139,7 +139,42 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+html,
+body {
+    height: 100%;
+}
+
+#root {
+    height: 100%;
+}
+
+html {
+    box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
+}
+
+:root {
+    --btn-color: rgb(59 130 246);
+}
+
+/* Utility Classes */
+.pointer {
+    cursor: pointer;
+}
+
+.no-select {
+    user-select: none;
+}
+
+.font-bold {
+    font-weight: bold;
 }

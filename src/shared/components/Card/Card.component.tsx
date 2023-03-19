@@ -13,7 +13,7 @@ type Props = {
 export function Card({ color, clickEvent, coordinate }: Props) {
     return (
         <div
-            className="card-container"
+            className="card-container pointer no-select"
             onClick={(event) => clickEvent(event, coordinate)}
         >
             <div
@@ -29,7 +29,7 @@ export function Card({ color, clickEvent, coordinate }: Props) {
                     display: color.visible ? '' : 'none',
                 }}
             >
-                Card, {color.displayNumber}
+                <div>{color.displayNumber}</div>
             </div>
         </div>
     );
