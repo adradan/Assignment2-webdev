@@ -21,7 +21,6 @@ export class MapService {
             }
             map.push(defaultValues);
         }
-        console.log(map);
         return map;
     }
 
