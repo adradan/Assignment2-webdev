@@ -11,10 +11,10 @@ function App() {
     const [rows, setRows] = useState(3);
     const [status, setStatus] = useState('');
     const [turns, setTurns] = useState(0);
-    const [currentTimeout, setCurrentTimeout] =
-        useState<ReturnType<typeof setTimeout>>();
     // [row, col]
     const [lastSelection, setLastSelection] = useState([] as number[]);
+    const [matches, setMatches] = useState(0);
+    const totalMatches = Math.floor((rows * 4) / 2);
 
     const genNewMap = () => {
         return mapService.generateMap(rows, colorService.createNewColors(rows));
@@ -44,8 +44,19 @@ function App() {
         const lastCol = lastSelection[1];
         const lastInfo = newMap[lastRow][lastCol];
 
+        if (lastInfo.displayNumber == currentSelection.displayNumber) {
+            setMatches(matches + 1);
+            setLastSelection([]);
+        } else {
+            setTimeout(() => {
+                currentSelection.visible = false;
+                lastInfo.visible = false;
+                setMap(newMap);
+                setLastSelection([]);
+            }, 200);
+        }
+
         setTurns(turns + 1);
-        setLastSelection([]);
     };
 
     const rowChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,16 +70,21 @@ function App() {
         setMap(genNewMap());
         setTurns(0);
         setLastSelection([]);
+        setMatches(0);
         setStatus('New Game Created.');
-        const timeout = setTimeout(() => {
+        setTimeout(() => {
             setStatus('');
         }, TWO_SECONDS_MS);
-        setCurrentTimeout(timeout);
     };
 
     useEffect(() => {
         newGame();
     }, [rows]);
+
+    useEffect(() => {
+        if (matches != totalMatches) return;
+        setStatus('Congratulations! You won!');
+    }, [matches]);
 
     return (
         <div className="app-component">
@@ -91,8 +107,12 @@ function App() {
                     </div>
                 </div>
                 <div className="app-row">
-                    <div>Turns: {turns}</div>
-                    <div>{status}</div>
+                    <div>
+                        Turns: {turns}
+                        <br />
+                        Matches: {matches}
+                    </div>
+                    <div className="font-bold">{status}</div>
                 </div>
                 <div className="app-row">
                     <div className="app-map">
