@@ -114,7 +114,7 @@ function App() {
                     </div>
                     <div className="font-bold">{status}</div>
                 </div>
-                <div className="app-row">
+                <div className="app-row" style={{ justifyContent: 'center' }}>
                     <div className="app-map">
                         {map.map((row, rowIdx) => {
                             return (

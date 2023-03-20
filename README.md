@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Deployment
+
+The site is deployed with GitHub Pages at [https://adradan.github.io/Assignment2-webdev/](https://adradan.github.io/Assignment2-webdev/)
+
 ## Available Scripts
 
 In the project directory, you can run:
