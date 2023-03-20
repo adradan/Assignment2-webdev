@@ -23,7 +23,7 @@
 
 .app-map {
     display: flex;
-    width: 100%;
+    width: 1050px;
     flex-wrap: wrap;
     justify-content: center;
 }
